@@ -3,12 +3,22 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
+const cors = require('cors');
 const { validateSignIn, validateSignUp, validateRoutesWithAuth } = require('./middlewares/request-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/not-found-error');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+const corsOrigins = [
+  'https://api.voltrein-mesto.nomoredomains.club',
+  'https://voltrein-mesto.nomoredomains.club',
+];
+
+app.use(cors({
+  origin: corsOrigins,
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
