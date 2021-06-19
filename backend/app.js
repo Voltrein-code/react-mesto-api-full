@@ -11,14 +11,21 @@ const NotFoundError = require('./errors/not-found-error');
 const { PORT = 3000 } = process.env;
 const app = express();
 
-const corsOrigins = [
-  'https://api.voltrein-mesto.nomoredomains.club',
+const allowedCors = [
   'https://voltrein-mesto.nomoredomains.club',
+  'https://api.voltrein-mesto.nomoredomains.club',
+  'localhost:3000'
 ];
 
-app.use(cors({
-  origin: corsOrigins,
-}));
+app.use(function(req, res, next) {
+  const { origin } = req.headers; // Записываем в переменную origin соответствующий заголовок
+
+  if (allowedCors.includes(origin)) { // Проверяем, что значение origin есть среди разрешённых доменов
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+
+  next();
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
