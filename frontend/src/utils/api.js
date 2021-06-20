@@ -1,4 +1,4 @@
-import {serverUrl, serverToken} from './utils';
+import { serverUrl } from './utils';
 
 class Api {
   constructor(options) {
@@ -99,7 +99,7 @@ class Api {
 const api = new Api({
   baseUrl: serverUrl,
   headers: {
-    authorization: serverToken,
+    authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json'
   }
 });
