@@ -11,16 +11,17 @@ const NotFoundError = require('./errors/not-found-error');
 const { PORT = 3000 } = process.env;
 const app = express();
 
-const allowedCors = [
-  'https://voltrein-mesto.nomoredomains.club',
-  'http://voltrein-mesto.nomoredomains.club',
-  'https://api.voltrein-mesto.nomoredomains.club',
-  'localhost:3000',
-];
-
-app.use(cors({
-  origin: allowedCors,
-}));
+const options = {
+  origin: [
+    'https://voltrein-mesto.nomoredomains.club',
+    'http://voltrein-mesto.nomoredomains.club',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+};
+app.use('*', cors(options));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
