@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
-const cors = require('cors');
 const { validateSignIn, validateSignUp, validateRoutesWithAuth } = require('./middlewares/request-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/not-found-error');
@@ -15,18 +15,12 @@ const allowedCors = [
   'https://voltrein-mesto.nomoredomains.club',
   'http://voltrein-mesto.nomoredomains.club',
   'https://api.voltrein-mesto.nomoredomains.club',
-  'localhost:3000'
+  'localhost:3000',
 ];
 
-app.use(function(req, res, next) {
-  const { origin } = req.headers; // Записываем в переменную origin соответствующий заголовок
-
-  if (allowedCors.includes(origin)) { // Проверяем, что значение origin есть среди разрешённых доменов
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-
-  next();
-});
+app.use(cors({
+  origin: allowedCors,
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
