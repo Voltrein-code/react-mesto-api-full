@@ -13,6 +13,7 @@ const app = express();
 
 const allowedCors = [
   'https://voltrein-mesto.nomoredomains.club',
+  'http://voltrein-mesto.nomoredomains.club',
   'https://api.voltrein-mesto.nomoredomains.club',
   'localhost:3000'
 ];
