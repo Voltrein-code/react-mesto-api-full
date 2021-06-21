@@ -237,7 +237,6 @@ export default function App() {
       .then((res) => {
         setIsLoggedIn(true);
         setUserData(res.data);
-        history.push('/');
       })
       .catch((err) => {
         switch (err) {
@@ -250,6 +249,9 @@ export default function App() {
           default:
             break;
         }
+      })
+      .finally(() => {
+        history.push('/');
       })
     }
   }, [history]);
