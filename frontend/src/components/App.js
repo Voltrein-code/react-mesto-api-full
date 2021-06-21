@@ -251,6 +251,7 @@ export default function App() {
         }
       })
       .finally(() => {
+        console.log(userData);
         history.push('/');
       })
     }
