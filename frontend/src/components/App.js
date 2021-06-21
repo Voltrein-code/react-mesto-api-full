@@ -232,28 +232,33 @@ export default function App() {
 
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
-    if(jwt) {
+    if (jwt) {
       checkToken(jwt)
-      .then((res) => {
-        setIsLoggedIn(true);
-        setUserData(res.data);
-      })
-      .catch((err) => {
-        switch (err) {
-          case 400:
-            console.log('Токен не передан или передан не в том формате');
-            break;
-          case 401:
-            console.log('Переданный токен некорректен ');
-            break;
-          default:
-            break;
-        }
-      })
-      .finally(() => {
-        console.log(userData);
-        history.push('/');
-      })
+        .then((res) => {
+          setIsLoggedIn(true);
+          api.getUserInfo()
+            .then((data) => {
+              setCurrentUser(data);
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        })
+        .catch((err) => {
+          switch (err) {
+            case 400:
+              console.log('Токен не передан или передан не в том формате');
+              break;
+            case 401:
+              console.log('Переданный токен некорректен ');
+              break;
+            default:
+              break;
+          }
+        })
+        .finally(() => {
+          history.push('/');
+        })
     }
   }, [history]);
 
@@ -262,7 +267,7 @@ export default function App() {
 
       <div className="page">
 
-        <Header 
+        <Header
           userData={userData}
           onSignOut={handleSignOut}
         />
@@ -295,7 +300,7 @@ export default function App() {
 
           <Route path='/sign-in'>
 
-            <Login 
+            <Login
               onSignIn={handleLogin}
               isLoggedIn={isLoggedIn}
               isLoading={isButtonSubmitLoading}
