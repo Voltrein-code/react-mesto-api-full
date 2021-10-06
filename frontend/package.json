@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -19,7 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* voltrein@84.201.179.3:/home/voltrein/mesto-frontend"
+    "deploy": "npm run build && scp -r ./build/* voltrein@62.84.122.18:/home/voltrein/mesto-frontend"
   },
   "eslintConfig": {
     "extends": [

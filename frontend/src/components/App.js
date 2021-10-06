@@ -200,7 +200,6 @@ export default function App() {
       .then((res) => {
         if (res.token) {
           setIsLoggedIn(true);
-          setUserData(data);
           localStorage.setItem('jwt', res.token);
           history.push('/');
         }
@@ -228,7 +227,11 @@ export default function App() {
     localStorage.removeItem('jwt');
     history.push('/sign-in');
     setIsLoggedIn(false);
-    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
   }
 
   React.useEffect(() => {
@@ -238,6 +241,7 @@ export default function App() {
       .then((res) => {
         setIsLoggedIn(true);
         setUserData(res);
+        setCurrentUser(res);
         history.push('/');
       })
       .catch((err) => {
@@ -253,7 +257,7 @@ export default function App() {
         }
       })
     }
-  }, [history]);
+  }, [history, isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
