@@ -228,6 +228,7 @@ export default function App() {
     localStorage.removeItem('jwt');
     history.push('/sign-in');
     setIsLoggedIn(false);
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
 
   React.useEffect(() => {

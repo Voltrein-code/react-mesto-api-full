@@ -100,7 +100,8 @@ const api = new Api({
   baseUrl: serverUrl,
   headers: {
     authorization: `Bearer ${localStorage.getItem('jwt')}`,
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache'
   }
 });
 
